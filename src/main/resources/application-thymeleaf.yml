@@ -1,0 +1,12 @@
+spring:
+  thymeleaf:
+    mode: HTML5 # 要应用于模板的模板模式，另请参见StandardTemplateModeHandlers
+    cache: false # 是否开启模板缓存，默认true
+    excluded-view-names: # 应该从解析中排除的视图名称列表（用逗号分隔）
+    prefix: classpath:/templates/ # 在链接网址时预先查看名称的前缀
+    encoding: UTF-8 # 模板编码
+    suffix: .html # 链接网址时附加到视图名称的后缀
+    check-template-location: true # 检查模板位置是否存在
+    enabled: true # 是否启用MVC-Thymeleaf视图
+    template-resolver-order: # 指定模板的解析顺序，默认为第一个
+    #view-names=index: # 指定使用模板的视图名，多个以逗号分隔

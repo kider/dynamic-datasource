@@ -1,0 +1,32 @@
+server:
+  port: 8282
+  servlet:
+    context-path: /dynamic
+
+# 使用log4j2
+logging:
+  config: classpath:log4j2.xml
+
+# druid thymeleaf
+spring:
+  profiles:
+    include: multi-druid,thymeleaf
+  aop:
+    auto: true
+    proxy-target-class: true
+
+# MyBatis
+mybatis:
+  # 配置类型别名
+  typeAliasesPackage: com.example.dynamic.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  systemDB:
+    mapperLocations: classpath:mybatis/mapper/system/*.xml
+  businessDB:
+    mapperLocations: classpath:mybatis/mapper/business/*.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis-config.xml
+
+# jta相关参数配置
+#jta:
+#  log-dir: classpath:tx-logs
