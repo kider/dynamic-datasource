@@ -2,6 +2,8 @@ package com.example.dynamic.controler;
 
 
 import com.example.dynamic.domain.business.Order;
+import com.example.dynamic.domain.system.Record;
+import com.example.dynamic.mybatis.pulgin.Pager;
 import com.example.dynamic.service.BuyServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,6 +33,11 @@ public class BuyControler {
         goodsList.put("橘子", 0.4d);
         goodsList.put("芒果", 0.7d);
         map.put("goodsList", goodsList);
+        //购买记录
+        Pager<Record> pager = new Pager();
+        pager.setPageNo(1);
+        pager.setPages(10);
+        map.put("pager", buyService.getRecordList(pager));
         return "index";
 
     }

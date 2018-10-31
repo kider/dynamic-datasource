@@ -16,18 +16,17 @@ public class SqlSessionTemplateConfig {
 
 
     @Bean("systemSqlSessionTemplate")
-    public SqlSessionTemplate systemSqlSessionTemplate(@Qualifier("systemSqlSessionFactory") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
+    public SqlSessionTemplate systemSqlSessionTemplate(@Qualifier("systemSqlSessionFactoryBean") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
 
         return new SqlSessionTemplate(sqlSessionFactoryBean.getObject());
 
     }
 
     @Bean("businessSqlSessionTemplate")
-    public SqlSessionTemplate businessSqlSessionTemplate(@Qualifier("businessSqlSessionFactory") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
+    public SqlSessionTemplate businessSqlSessionTemplate(@Qualifier("businessSqlSessionFactoryBean") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
 
         return new SqlSessionTemplate(sqlSessionFactoryBean.getObject());
 
     }
-
 
 }

@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>thymeleaf</title>
+    <title>抢购页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <script src="../static/jquery-3.3.1.min.js" th:src="@{/jquery-3.3.1.min.js}"></script>
 <body>
+<br>
 <form th:action="@{/buy/pay}" method="post" id="buyForm">
-
     请选择购买物品:
     <select name="goods" id="goods">
         <option value="">请选择</option>
@@ -18,22 +18,31 @@
     <span id="showGoodsInfo"></span>
     <input type="button" value="抢 购" id="buy">
 </form>
+<br>
+<br>
+<div>抢购记录，最近10条：</div>
+<div th:each="record:${pager.list}"
+     th:text="|在${#dates.format(record.buyTime,'yyyy-MM-dd HH:mm:ss')} ${record.msg}元！|"/>
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
 
         $("#goods").change(function () {
             var goods = $("select[name='goods'] option:selected");
-            $("#price").val(goods.val());
-            $("#product").val(goods.text());
-            $("#showGoodsInfo").text("赶快抢购，" + goods.text() + "特价" + goods.val() + "元！");
+            if ("" != goods.val()) {
+                $("#price").val(goods.val());
+                $("#product").val(goods.text());
+                $("#showGoodsInfo").text("赶快抢购，" + goods.text() + "特价" + goods.val() + "元！");
+            } else {
+                $("#showGoodsInfo").text("");
+            }
+
         });
 
 
         $("#buy").click(function () {
 
             var price = $("#price").val();
-            var product = $("#product").val();
 
             if ("" == price) {
                 alert("请选择抢购商品");

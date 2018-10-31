@@ -21,11 +21,36 @@ mybatis:
   typeAliasesPackage: com.example.dynamic.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   systemDB:
-    mapperLocations: classpath:mybatis/mapper/system/*.xml
+    mapperLocations: classpath:mybatis/system/mapper/*.xml
   businessDB:
-    mapperLocations: classpath:mybatis/mapper/business/*.xml
+    mapperLocations: classpath:mybatis/business/mapper/*.xml
   # 加载全局的配置文件
-  configLocation: classpath:mybatis-config.xml
+  #  configLocation: classpath:mybatis-config.xml
+  # 开启 mybatis xml自动加载 (暂时不开启，还有点问题)
+  mapper:
+    auto:
+      load: false
+      # 扫描间隔
+    interval: 5
+  configuration:
+    pagePlugin:
+      pageSqlId: .*Pagination*.*
+      # 全局映射器启用缓存
+    cache-enabled: false
+    # 查询时，关闭关联对象即时加载以提高性能
+    lazy-loading-enabled: true
+    # 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能
+    aggressive-lazy-loading: false
+    # 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果
+    multiple-result-sets-enabled: true
+    # 允许使用列标签代替列名
+    use-column-label: true
+    # 允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖
+    use-generated-keys: true
+    # 给予被嵌套的resultMap以字段-属性的映射支持
+    auto-mapping-behavior: full
+    # 数据库超过25秒仍未响应则超时
+    default-statement-timeout: 25
 
 # jta相关参数配置
 #jta:

@@ -19,14 +19,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mybatis.mapper.business">
+<mapper namespace="com.example.dynamic.dao.OrderDao">
     <resultMap id="order" type="com.example.dynamic.domain.business.Order">
-        <result column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
-        <result column="product" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+        <result column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result column="product" property="product" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="price" property="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.example.dynamic.domain.business.Order">
+    <insert id="saveOrder" parameterType="com.example.dynamic.domain.business.Order">
     insert into t_order(product,price) values (#{product,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL})
     </insert>
 </mapper>
