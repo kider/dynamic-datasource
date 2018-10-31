@@ -4,8 +4,9 @@ CREATE TABLE `t_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` varchar(50) NOT NULL,
   `msg` varchar(200) DEFAULT NULL,
+  `buy_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 
 CREATE DATABASE `business_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
