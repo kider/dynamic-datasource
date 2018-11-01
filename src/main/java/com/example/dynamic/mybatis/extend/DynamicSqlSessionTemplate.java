@@ -1,5 +1,6 @@
-package com.example.dynamic.config;
+package com.example.dynamic.mybatis.extend;
 
+import com.example.dynamic.config.DynamicSqlSessionFactory;
 import com.example.dynamic.tools.DynamicDataSourceHolder;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchResult;
@@ -21,6 +22,9 @@ import static java.lang.reflect.Proxy.newProxyInstance;
 import static org.apache.ibatis.reflection.ExceptionUtil.unwrapThrowable;
 import static org.mybatis.spring.SqlSessionUtils.*;
 
+/**
+ * DynamicSqlSessionTemplate
+ */
 public class DynamicSqlSessionTemplate extends SqlSessionTemplate {
 
     private static final Logger logger = LogManager.getLogger(DynamicSqlSessionTemplate.class);
@@ -56,16 +60,15 @@ public class DynamicSqlSessionTemplate extends SqlSessionTemplate {
     public SqlSessionFactory getSqlSessionFactory() {
         String dataSourceType = DynamicDataSourceHolder.getDataSourceType();
         SqlSessionFactory targetSqlSessionFactory = DynamicSqlSessionFactory.getSqlSessionFactory(dataSourceType);
-        logger.info("DynamicSqlSessionTemplate 当前线程Thread:" + Thread.currentThread().getName() + " 当前SqlSessionFactory " + targetSqlSessionFactory);
         if (targetSqlSessionFactory != null) {
             return targetSqlSessionFactory;
         } else if (defaultTargetSqlSessionFactory != null) {
             if (dataSourceType != null) {
-                logger.warn("此[" + dataSourceType + "]dataSourceType未配置文件中配置targetSqlSessionFactorys,将会返回defaultTargetSqlSessionFactory来执行后面的操作");
+                logger.warn("此[" + dataSourceType + "]dataSourceType所对应的sqlSessionFactory未在DynamicSqlSessionFactory中加载,将会返回defaultTargetSqlSessionFactory来执行后面的操作");
             }
             return defaultTargetSqlSessionFactory;
         } else {
-            Assert.notNull(defaultTargetSqlSessionFactory, "Property 'defaultTargetSqlSessionFactory' or 'targetSqlSessionFactorys' are required");
+            Assert.notNull(defaultTargetSqlSessionFactory, "'defaultTargetSqlSessionFactory' are required");
         }
         return this.sqlSessionFactory;
     }

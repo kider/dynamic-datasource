@@ -25,7 +25,9 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * Mybatis的分页查询插件，通过拦截StatementHandler的prepare方法来实现。 只有在参数列表中包括Page类型的参数时才进行分页查询。 在多参数的情况下，只对第一个Page类型的参数生效。 另外，在参数列表中，Page类型的参数无需用@Param来标注
+ * Mybatis的分页查询插件，通过拦截StatementHandler的prepare方法来实现。
+ * 只有在参数列表中包括Page类型的参数时才进行分页查询。 在多参数的情况下，只对第一个Page类型的参数生效。
+ * 另外，在参数列表中，Page类型的参数无需用@Param来标注
  */
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class PagePlugin implements Interceptor {
@@ -38,7 +40,7 @@ public class PagePlugin implements Interceptor {
     /**
      * mybaits的数据库xml映射文件中需要拦截的ID(正则匹配)
      */
-    @Value("${mybatis.configuration.pagePlugin.pageSqlId}")
+    @Value("${mybatis.configuration.plugins.pagePlugin.pageSqlId}")
     private String pageSqlId = "";
 
     public final static String DBTYPE_MYSQL = "mysql";
@@ -147,12 +149,15 @@ public class PagePlugin implements Interceptor {
         return Plugin.wrap(target, this);
     }
 
-    //xml
+    /**
+     * xml配置时 加载
+     *
+     * @param p
+     */
     @Override
     public void setProperties(Properties p) {
         // 数据库方言
-        String dialect = "";
-        dialect = p.getProperty("dialect");
+        String dialect = p.getProperty("dialect");
         if (StringUtils.isEmpty(dialect)) {
             try {
                 throw new PropertyException("dialect property is not found!");

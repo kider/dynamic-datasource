@@ -4,6 +4,7 @@
  */
 package com.example.dynamic.config;
 
+import com.example.dynamic.mybatis.extend.DynamicSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +39,7 @@ public class DynamicSqlSessionFactory implements ApplicationContextAware {
 
         Map<String, DynamicSqlSessionFactoryBean> map = applicationContext.getBeansOfType(DynamicSqlSessionFactoryBean.class);
 
-        sqlSessionFactoryMap = new HashMap<>();
+        sqlSessionFactoryMap = new HashMap<>(16);
 
         for (DynamicSqlSessionFactoryBean value : map.values()) {
             try {

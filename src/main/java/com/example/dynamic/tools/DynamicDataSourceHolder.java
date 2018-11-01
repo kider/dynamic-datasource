@@ -3,6 +3,9 @@ package com.example.dynamic.tools;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * dataSourceType线程变量
+ */
 public class DynamicDataSourceHolder {
 
     private static final Logger logger = LogManager.getLogger(DynamicDataSourceHolder.class);

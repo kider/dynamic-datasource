@@ -1,4 +1,4 @@
-package com.example.dynamic.mybatis;
+package com.example.dynamic.config;
 
 import com.example.dynamic.mybatis.pulgin.PagePlugin;
 import com.example.dynamic.mybatis.pulgin.dialet.MySQLDialect;
@@ -13,7 +13,7 @@ public class MyBatisConfig {
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionTemplateBeanName("dynamicSqlSessionTemplate");
-        mapperScannerConfigurer.setBasePackage("com.example.dynamic.dao");
+        mapperScannerConfigurer.setBasePackage("com.example.dynamic.mapper");
         return mapperScannerConfigurer;
     }
 

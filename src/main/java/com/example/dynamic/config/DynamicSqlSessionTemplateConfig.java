@@ -2,6 +2,7 @@ package com.example.dynamic.config;
 
 
 import com.example.dynamic.annotation.DynamicDataSource;
+import com.example.dynamic.mybatis.extend.DynamicSqlSessionTemplate;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

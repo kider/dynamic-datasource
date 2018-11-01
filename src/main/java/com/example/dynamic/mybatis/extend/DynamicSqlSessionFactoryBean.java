@@ -1,4 +1,4 @@
-package com.example.dynamic.config;
+package com.example.dynamic.mybatis.extend;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 

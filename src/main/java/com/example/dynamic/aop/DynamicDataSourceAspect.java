@@ -20,7 +20,7 @@ public class DynamicDataSourceAspect {
 
     private static final Logger logger = LogManager.getLogger(DynamicDataSourceAspect.class);
 
-    @Pointcut("execution(* com.example.dynamic.dao..*.*(..))")
+    @Pointcut("execution(* com.example.dynamic.mapper..*.*(..))")
     public void switchDataSource() {
     }
 

@@ -1,4 +1,4 @@
-package com.example.dynamic.config;
+package com.example.dynamic.mybatis.extend;
 
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.executor.ErrorContext;
@@ -27,6 +27,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 监控mapper xml 文件
+ */
 @Component("mybatisMapperDynamicLoader")
 public class MybatisMapperDynamicLoader implements DisposableBean, InitializingBean, ApplicationContextAware {
 
@@ -42,13 +45,19 @@ public class MybatisMapperDynamicLoader implements DisposableBean, InitializingB
     /**
      * 是否加载
      */
-    @Value("${mybatis.mapper.auto.load}")
+    @Value("${mybatis.mapper.autoload}")
     private boolean load;
     /**
      * 扫描间隔,默认5秒
      */
     @Value("${mybatis.mapper.interval}")
     private long interval;
+
+    /**
+     * mapper xml匹配路径
+     */
+    @Value("${mybatis.mapper.resource.pattern}")
+    private String XML_RESOURCE_PATTERN;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -100,7 +109,7 @@ public class MybatisMapperDynamicLoader implements DisposableBean, InitializingB
     @SuppressWarnings({"rawtypes"})
     class Scanner {
         private String[] basePackages;
-        private static final String XML_RESOURCE_PATTERN = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "mapper/*.xml";
+
         private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 
         public Scanner() {

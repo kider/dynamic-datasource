@@ -1,13 +1,13 @@
-package com.example.dynamic.dao;
+package com.example.dynamic.mapper;
 
 import com.example.dynamic.annotation.DynamicDataSource;
-import com.example.dynamic.domain.system.Record;
+import com.example.dynamic.model.system.Record;
 import com.example.dynamic.mybatis.pulgin.Pager;
 
 import java.util.List;
 
 @DynamicDataSource(dataSourceType = DynamicDataSource.SYSTEM_DS)
-public interface SystemDao {
+public interface SystemMapper {
 
     /**
      * 保存

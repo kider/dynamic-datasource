@@ -1,6 +1,7 @@
 package com.example.dynamic.config;
 
 
+import com.example.dynamic.mybatis.extend.DynamicSqlSessionFactoryBean;
 import com.example.dynamic.mybatis.pulgin.PagePlugin;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.logging.log4j.LogManager;

@@ -1,4 +1,4 @@
-package com.example.dynamic.domain.business;
+package com.example.dynamic.model.business;
 
 import java.math.BigDecimal;
 

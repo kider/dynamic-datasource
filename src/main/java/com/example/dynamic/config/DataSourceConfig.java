@@ -2,12 +2,10 @@ package com.example.dynamic.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -38,17 +36,6 @@ public class DataSourceConfig {
         ds.setXaProperties(prop);
         return ds;
     }
-
-    @Bean("sysJdbcTemplate")
-    public JdbcTemplate sysJdbcTemplate(@Qualifier("systemDataSource") DataSource ds) {
-        return new JdbcTemplate(ds);
-    }
-
-    @Bean("busJdbcTemplate")
-    public JdbcTemplate busJdbcTemplate(@Qualifier("businessDataSource") DataSource ds) {
-        return new JdbcTemplate(ds);
-    }
-
 
     /**
      * 读取DataSource配置

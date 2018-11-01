@@ -1,9 +1,9 @@
 package com.example.dynamic.service;
 
-import com.example.dynamic.dao.OrderDao;
-import com.example.dynamic.dao.SystemDao;
-import com.example.dynamic.domain.business.Order;
-import com.example.dynamic.domain.system.Record;
+import com.example.dynamic.mapper.OrderMapper;
+import com.example.dynamic.mapper.SystemMapper;
+import com.example.dynamic.model.business.Order;
+import com.example.dynamic.model.system.Record;
 import com.example.dynamic.mybatis.pulgin.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import java.util.Date;
 public class BuyServiceImpl {
 
     @Autowired
-    private OrderDao orderDao;
+    private OrderMapper orderMapper;
 
     @Autowired
-    private SystemDao systemDao;
+    private SystemMapper systemMapper;
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void buy(Order order) {
-        orderDao.saveOrder(order);
+        orderMapper.saveOrder(order);
         //抛出错误
         if ("香蕉".equals(order.getProduct())) {
             throw new RuntimeException("对不起，特价香蕉已经卖完了");
@@ -32,7 +32,7 @@ public class BuyServiceImpl {
         record.setType("order");
         record.setMsg("购买" + order.getProduct() + "一个,价格：" + order.getPrice());
         record.setBuyTime(new Date());
-        systemDao.saveRecord(record);
+        systemMapper.saveRecord(record);
         //抛出错误
         if ("芒果".equals(order.getProduct())) {
             throw new RuntimeException("对不起，特价芒果已经卖完了");
@@ -41,7 +41,7 @@ public class BuyServiceImpl {
 
 
     public Pager<Record> getRecordList(Pager<Record> pager) {
-        pager.setList(systemDao.selectRecordPaginationList(pager));
+        pager.setList(systemMapper.selectRecordPaginationList(pager));
         return pager;
     }
 

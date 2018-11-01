@@ -1,4 +1,4 @@
-package com.example.dynamic.domain.system;
+package com.example.dynamic.model.system;
 
 import java.io.Serializable;
 import java.util.Date;

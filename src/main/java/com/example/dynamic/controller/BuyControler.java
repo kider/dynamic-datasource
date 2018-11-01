@@ -1,8 +1,8 @@
-package com.example.dynamic.controler;
+package com.example.dynamic.controller;
 
 
-import com.example.dynamic.domain.business.Order;
-import com.example.dynamic.domain.system.Record;
+import com.example.dynamic.model.business.Order;
+import com.example.dynamic.model.system.Record;
 import com.example.dynamic.mybatis.pulgin.Pager;
 import com.example.dynamic.service.BuyServiceImpl;
 import org.apache.logging.log4j.LogManager;
