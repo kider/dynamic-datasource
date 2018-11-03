@@ -21,27 +21,8 @@ spring:
 mybatis:
   # 配置类型别名
   typeAliasesPackage: com.example.dynamic.model
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  systemDB:
-    mapperLocations: classpath:mybatis/mapper/system/*.xml
-  businessDB:
-    mapperLocations: classpath:mybatis/mapper/business/*.xml
-  # 加载全局的配置文件
-  #  configLocation: classpath:mybatis-config.xml
-  # 开启 mybatis xml自动加载
-  mapper:
-    autoload: false
-    # 扫描间隔
-    interval: 30
-    # mapper文件匹配路径 监控用
-    resource:
-      pattern: classpath*:mybatis/mapper/**/*.xml
   configuration:
-    # 分页插件 过滤参数
-    plugins:
-      pagePlugin:
-        pageSqlId: .*Pagination*.*
-      # 全局映射器启用缓存
+    # 全局映射器启用缓存
     cache-enabled: false
     # 查询时，关闭关联对象即时加载以提高性能
     lazy-loading-enabled: true
@@ -57,3 +38,16 @@ mybatis:
     auto-mapping-behavior: full
     # 数据库超过25秒仍未响应则超时
     default-statement-timeout: 25
+
+# 分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pagehelper.params: count=countSql
+
+# 通用 Mapper 配置
+mapper:
+  mappers: com.example.dynamic.utils.MyMapper
+  not-empty: false
+  identity: MYSQL

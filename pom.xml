@@ -25,6 +25,8 @@
         <mybatis.version>1.3.2</mybatis.version>
         <druid.version>1.1.10</druid.version>
         <log4j1-2.api>2.11.1</log4j1-2.api>
+        <mapper.starter.version>2.0.4</mapper.starter.version>
+        <pagehelper.starter.version>1.2.9</pagehelper.starter.version>
     </properties>
 
     <dependencies>
@@ -99,6 +101,25 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!--mapper-->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${mapper.starter.version}</version>
+        </dependency>
+        <!--pagehelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis.spring.boot</groupId>
+                    <artifactId>mybatis-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
     </dependencies>
 
@@ -121,11 +142,11 @@
                 <dependencies>
                     <!-- spring热部署-->
                     <!--https://mvnrepository.com/artifact/org.springframework/springloaded-->
-                    <!--<dependency>-->
-                    <!--<groupId>org.springframework</groupId>-->
-                    <!--<artifactId>springloaded</artifactId>-->
-                    <!--<version>1.2.6.RELEASE</version>-->
-                    <!--</dependency>-->
+                    <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>springloaded</artifactId>
+                    <version>1.2.6.RELEASE</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>

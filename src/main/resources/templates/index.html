@@ -4,27 +4,89 @@
     <title>抢购页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
-<script src="../static/jquery-3.3.1.min.js" th:src="@{/jquery-3.3.1.min.js}"></script>
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
 <body>
-<br>
-<form th:action="@{/buy/pay}" method="post" id="buyForm">
-    请选择购买物品:
-    <select name="goods" id="goods">
-        <option value="">请选择</option>
-        <option th:each="goods:${goodsList}" th:value="${goods.value}" th:text="${goods.key}"/>
-    </select>
-    <input type="hidden" name="price" id="price" value="">
-    <input type="hidden" name="product" id="product" value="">
-    <span id="showGoodsInfo"></span>
-    <input type="button" value="抢 购" id="buy">
-</form>
-<br>
-<br>
-<div>抢购记录，最近10条：</div>
-<div th:each="record:${pager.list}"
-     th:text="|在${#dates.format(record.buyTime,'yyyy-MM-dd HH:mm:ss')} ${record.msg}元！|"/>
+<div class="wrapper">
+    <div class="middle">
+        <h1 style="padding: 50px 0 20px;">请选择购买物品:</h1>
+        <form th:action="@{/buy/pay}" method="post" id="buyForm">
+            <input type="hidden" name="price" id="price" value="">
+            <input type="hidden" name="product" id="product" value="">
+            <table class="gridtable" style="width:100%;">
+                <tr>
+                    <td width="20%">
+                        <select name="goods" id="goods">
+                            <option value="">请选择</option>
+                            <option th:each="goods:${goodsList}" th:value="${goods.value}" th:text="${goods.key}"/>
+                        </select>
+                    </td>
+                    <td width="60%">
+                        <span style="color: red;" id="showGoodsInfo"></span>
+                    </td>
+                    <td width="20%">
+                        <input type="button" value="抢 购" id="buy">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table class="gridtable" style="width:100%;">
+            <thead>
+            <tr>
+                <th colspan="5">抢购记录：</th>
+            </tr>
+            <form th:action="@{/buy}" method="post" id="searchForm">
+                <tr>
+                    <td width="20%" colspan="1">
+                        关键字：
+                    </td>
+                    <td width="60%" colspan="3">
+                        <input type="text" style="width:90%" th:value="${record.msg}" name="msg" id="msg"/>
+                    </td>
+                    <td rowspan="2" width="20%"><input type="button" value="查 询" id="search"></td>
+                </tr>
+                <tr>
+                    <td width="20%">页码：</td>
+                    <td width="20%"><input style="width:50%" type="text" name="page" th:value="${record.page}"/></td>
+                    <td width="20%">页面大小：</td>
+                    <td width="20%"><input style="width:50%" type="text" name="rows" th:value="${record.rows}"/></td>
+                </tr>
+            </form>
+            </thead>
+            <tbody>
+            <tr th:each="record:${pageInfo.list}">
+                <td colspan="5" th:text="|于 ${#dates.format(record.buyTime,'yyyy-MM-dd HH:mm:ss')} ${record.msg}|"/>
+            </tr>
+            </tbody>
+        </table>
+        <table class="gridtable" style="width:100%;text-align: center;">
+            <tr th:with="hasPreviousPage = ${pageInfo.hasPreviousPage},hasNextPage = ${pageInfo.hasNextPage}">
+                <td th:if="${hasPreviousPage}">
+                    <a th:href="@{/buy(page=1,rows=${pageInfo.pageSize},msg=${record.msg})}">首页</a>
+                </td>
+                <td th:if="${hasPreviousPage}">
+                    <a th:href="@{/buy(page=${pageInfo.prePage},rows=${pageInfo.pageSize},msg=${record.msg})}">前一页</a>
+                </td>
+
+                <td th:each="nav:${pageInfo.navigatepageNums}" style="font-weight: bold;">
+                    <span th:if="${nav} eq ${pageInfo.pageNum}" th:text="${nav}"></span>
+                    <a th:href="@{/buy(page=${nav},rows=${pageInfo.pageSize},msg=${record.msg})}"
+                       th:if="${nav} ne ${pageInfo.pageNum}"
+                       th:text="${nav}"></a>
+                </td>
+
+                <td th:if="${hasNextPage}">
+                    <a th:href="@{/buy(page=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">下一页</a>
+                </td>
+                <td th:if="${hasNextPage}">
+                    <a th:href="@{/buy(page=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">尾页</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
 
         $("#goods").change(function () {
@@ -51,6 +113,19 @@
 
             $("#buyForm").submit();
         })
+
+        $("#search").click(
+            function () {
+                var keyword = $("keyword").val();
+                if ("" == keyword) {
+                    alert("请输入关键字");
+                    return;
+                }
+                // var url = /*[[@{/buy}]]*/ +"";
+                $("#searchForm").submit();
+            }
+        );
+
     });
 </script>
 </html>

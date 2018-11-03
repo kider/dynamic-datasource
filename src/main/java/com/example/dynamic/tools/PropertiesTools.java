@@ -1,41 +1,15 @@
-package com.example.dynamic.config;
+package com.example.dynamic.tools;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
-@Configuration
-public class DataSourceConfig {
+public class PropertiesTools {
 
-    private static final Logger logger = LogManager.getLogger(DataSourceConfig.class);
+    private static final Logger logger = LogManager.getLogger(PropertiesTools.class);
 
-    @Bean(name = "systemDataSource")
-    public DataSource systemDataSource(Environment env) {
-        AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
-        Properties prop = build(env, "spring.datasource.druid.systemDB.");
-        ds.setXaDataSourceClassName("com.alibaba.druid.pool.xa.DruidXADataSource");
-        ds.setUniqueResourceName(prop.getProperty("name"));
-        ds.setPoolSize(5);
-        ds.setXaProperties(prop);
-        return ds;
-    }
-
-    @Bean(name = "businessDataSource")
-    public DataSource businessDataSource(Environment env) {
-        AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
-        Properties prop = build(env, "spring.datasource.druid.businessDB.");
-        ds.setXaDataSourceClassName("com.alibaba.druid.pool.xa.DruidXADataSource");
-        ds.setUniqueResourceName(prop.getProperty("name"));
-        ds.setPoolSize(5);
-        ds.setXaProperties(prop);
-        return ds;
-    }
 
     /**
      * 读取DataSource配置
@@ -45,7 +19,7 @@ public class DataSourceConfig {
      * @return Properties
      * @see com.alibaba.druid.pool.DruidDataSource
      */
-    private Properties build(Environment env, String prefix) {
+    public static Properties build(Environment env, String prefix) {
         Properties prop = new Properties();
         prop.put("url", env.getProperty(prefix + "url"));
         prop.put("name", env.getProperty(prefix + "name"));
@@ -82,7 +56,7 @@ public class DataSourceConfig {
      * @return Properties
      */
 
-    private Properties setConnectionProperties(String connectionProperties) {
+    private static Properties setConnectionProperties(String connectionProperties) {
         String[] entries = connectionProperties.split(";");
         Properties properties = new Properties();
         for (int i = 0; i < entries.length; i++) {
@@ -101,5 +75,4 @@ public class DataSourceConfig {
         }
         return properties;
     }
-
 }

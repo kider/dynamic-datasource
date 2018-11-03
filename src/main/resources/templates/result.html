@@ -1,13 +1,36 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>thymeleaf</title>
+    <title>抢购结果</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
-<script src="../static/jquery-3.3.1.min.js" th:src="@{/jquery-3.3.1.min.js}"></script>
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
 <body>
-<h5 th:text="${result}">
-</h5>
-<div><a th:href="@{/buy}" th:text="点击继续抢购"></a></div>
+<div class="wrapper">
+    <div class="middle">
+        <h1 style="padding: 50px 0 20px;" th:text="|${result}三秒钟自动跳转到抢购页面!|"></h1>
+    </div>
+</div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+
+    $(document).ready(function () {
+        sleep(3000);
+        // var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+        var url = /*[[@{/buy}]]*/ + "";
+        window.location.href = url;
+    });
+
+    //参数n为休眠时间，单位为毫秒:
+    function sleep(n) {
+        var start = new Date().getTime();
+        while (true) {
+            if (new Date().getTime() - start > n) {
+                break;
+            }
+        }
+    }
+
+</script>
 </html>

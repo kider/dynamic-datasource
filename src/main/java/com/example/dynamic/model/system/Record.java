@@ -1,27 +1,18 @@
 package com.example.dynamic.model.system;
 
-import java.io.Serializable;
+import com.example.dynamic.model.BaseEntity;
+
+import javax.persistence.Table;
 import java.util.Date;
 
-public class Record implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    private long id;
+@Table(name = "t_record")
+public class Record extends BaseEntity {
 
     private String type;
 
     private String msg;
 
     private Date buyTime;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getType() {
         return type;
@@ -51,7 +42,7 @@ public class Record implements Serializable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"id\":")
-                .append(id);
+                .append(getId());
         sb.append(",\"type\":\"")
                 .append(type).append('\"');
         sb.append(",\"msg\":\"")

@@ -19,20 +19,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.dynamic.mapper.SystemMapper">
-    <resultMap id="record" type="com.example.dynamic.model.system.Record">
-        <result column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
-        <result column="type" property="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result column="msg" property="msg" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result column="buy_time" property="buyTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-    </resultMap>
-
-    <insert id="saveRecord" parameterType="com.example.dynamic.model.system.Record">
-    insert into t_record(type,msg,buy_time) values (#{type,jdbcType=VARCHAR},#{msg,jdbcType=VARCHAR},#{buyTime,jdbcType=TIMESTAMP})
-    </insert>
-
-    <select id="selectRecordPaginationList" resultMap="record">
-            select type,msg,buy_time from t_record order by buy_time desc
-    </select>
+<mapper namespace="com.example.dynamic.mapper.system.SystemMapper">
 
 </mapper>
