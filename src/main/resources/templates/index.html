@@ -47,9 +47,9 @@
                 </tr>
                 <tr>
                     <td width="20%">页码：</td>
-                    <td width="20%"><input style="width:50%" type="text" name="page" th:value="${record.page}"/></td>
+                    <td width="20%"><input style="width:50%" type="text" name="page" th:value="${pageInfo.pageNo}"/></td>
                     <td width="20%">页面大小：</td>
-                    <td width="20%"><input style="width:50%" type="text" name="rows" th:value="${record.rows}"/></td>
+                    <td width="20%"><input style="width:50%" type="text" name="rows" th:value="${pageInfo.pageSize}"/></td>
                 </tr>
             </form>
             </thead>
@@ -62,24 +62,24 @@
         <table class="gridtable" style="width:100%;text-align: center;">
             <tr th:with="hasPreviousPage = ${pageInfo.hasPreviousPage},hasNextPage = ${pageInfo.hasNextPage}">
                 <td th:if="${hasPreviousPage}">
-                    <a th:href="@{/buy(page=1,rows=${pageInfo.pageSize},msg=${record.msg})}">首页</a>
+                    <a th:href="@{/buy(pageNo=1,rows=${pageInfo.pageSize},msg=${record.msg})}">首页</a>
                 </td>
                 <td th:if="${hasPreviousPage}">
-                    <a th:href="@{/buy(page=${pageInfo.prePage},rows=${pageInfo.pageSize},msg=${record.msg})}">前一页</a>
+                    <a th:href="@{/buy(pageNo=${pageInfo.prePage},rows=${pageInfo.pageSize},msg=${record.msg})}">前一页</a>
                 </td>
 
                 <td th:each="nav:${pageInfo.navigatepageNums}" style="font-weight: bold;">
-                    <span th:if="${nav} eq ${pageInfo.pageNum}" th:text="${nav}"></span>
-                    <a th:href="@{/buy(page=${nav},rows=${pageInfo.pageSize},msg=${record.msg})}"
-                       th:if="${nav} ne ${pageInfo.pageNum}"
+                    <span th:if="${nav} eq ${pageInfo.pageNo}" th:text="${nav}"></span>
+                    <a th:href="@{/buy(pageNo=${nav},rows=${pageInfo.pageSize},msg=${record.msg})}"
+                       th:if="${nav} ne ${pageInfo.pageNo}"
                        th:text="${nav}"></a>
                 </td>
 
                 <td th:if="${hasNextPage}">
-                    <a th:href="@{/buy(page=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">下一页</a>
+                    <a th:href="@{/buy(pageNo=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">下一页</a>
                 </td>
                 <td th:if="${hasNextPage}">
-                    <a th:href="@{/buy(page=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">尾页</a>
+                    <a th:href="@{/buy(pageNo=${pageInfo.nextPage},rows=${pageInfo.pageSize},msg=${record.msg})}">尾页</a>
                 </td>
             </tr>
         </table>

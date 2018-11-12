@@ -1,18 +1,24 @@
 package com.example.dynamic.model.system;
 
-import com.example.dynamic.model.BaseEntity;
-
-import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "t_record")
-public class Record extends BaseEntity {
+public class Record {
+
+    private Long id;
 
     private String type;
 
     private String msg;
 
     private Date buyTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getType() {
         return type;
@@ -42,7 +48,7 @@ public class Record extends BaseEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"id\":")
-                .append(getId());
+                .append(id);
         sb.append(",\"type\":\"")
                 .append(type).append('\"');
         sb.append(",\"msg\":\"")

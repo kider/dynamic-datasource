@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @SpringBootApplication
+//@MapperScan(basePackages = "com.example.dynamic.mapper", sqlSessionTemplateRef = "dynamicSqlSessionTemplate")
 public class DynamicApplication implements CommandLineRunner {
 
     private static final Logger logger = LogManager.getLogger(DynamicApplication.class);

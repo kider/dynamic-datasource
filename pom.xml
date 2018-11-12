@@ -101,26 +101,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!--mapper-->
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>${mapper.starter.version}</version>
-        </dependency>
-        <!--pagehelper-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.starter.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis.spring.boot</groupId>
-                    <artifactId>mybatis-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-
     </dependencies>
 
     <build>
@@ -143,9 +123,9 @@
                     <!-- spring热部署-->
                     <!--https://mvnrepository.com/artifact/org.springframework/springloaded-->
                     <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>springloaded</artifactId>
-                    <version>1.2.6.RELEASE</version>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.6.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>

@@ -1,17 +1,17 @@
 package com.example.dynamic.config;
 
+import com.example.dynamic.mybatis.extend.DynamicSqlSessionFactoryBean;
+import com.example.dynamic.mybatis.pulgin.PagePlugin;
 import com.example.dynamic.tools.PropertiesTools;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import tk.mybatis.spring.annotation.MapperScan;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -22,12 +22,7 @@ import java.util.Properties;
  * @author kider
  */
 @Configuration
-@MapperScan(basePackages = SystemDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "systemSqlSessionFactory")
 public class SystemDataSourceConfig {
-
-    protected static final String PACKAGE = "com.example.dynamic.mapper.system";
-
-    protected static final String MAPPER_LOCATION = "classpath:mybatis/mapper/system/*.xml";
 
     private static final Logger logger = LogManager.getLogger(SystemDataSourceConfig.class);
 
@@ -43,14 +38,16 @@ public class SystemDataSourceConfig {
     }
 
 
-    @Bean(name = "systemSqlSessionFactory")
-    public SqlSessionFactory masterSqlSessionFactory(@Qualifier("systemDataSource") DataSource systemDataSource)
+    @Bean(name = "systemSqlSessionFactoryBean")
+    public DynamicSqlSessionFactoryBean systemSqlSessionFactoryBean(Environment env, @Qualifier("systemDataSource") DataSource systemDataSource, @Qualifier("pagePlugin") PagePlugin pagePlugin)
             throws Exception {
-        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(systemDataSource);
-        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources(SystemDataSourceConfig.MAPPER_LOCATION));
-        return sessionFactory.getObject();
+        final DynamicSqlSessionFactoryBean sessionFactoryBean = new DynamicSqlSessionFactoryBean();
+        sessionFactoryBean.setDataSource(systemDataSource);
+        sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources(env.getProperty("mybatis.systemDB.mapperLocations")));
+        sessionFactoryBean.setPlugins(new Interceptor[]{pagePlugin});
+        sessionFactoryBean.setDataSourceBeanName("systemDataSource");
+        return sessionFactoryBean;
     }
 
 }

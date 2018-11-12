@@ -1,16 +1,22 @@
 package com.example.dynamic.model.business;
 
-import com.example.dynamic.model.BaseEntity;
-
-import javax.persistence.Table;
 import java.math.BigDecimal;
 
-@Table(name = "t_order")
-public class Order extends BaseEntity {
+public class Order {
+
+    private Long id;
 
     private String product;
 
     private BigDecimal price;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getProduct() {
         return product;
@@ -32,7 +38,7 @@ public class Order extends BaseEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"id\":")
-                .append(getId());
+                .append(id);
         sb.append(",\"product\":\"")
                 .append(product).append('\"');
         sb.append(",\"price\":")

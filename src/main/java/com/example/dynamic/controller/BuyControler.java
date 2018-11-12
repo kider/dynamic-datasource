@@ -3,8 +3,8 @@ package com.example.dynamic.controller;
 
 import com.example.dynamic.model.business.Order;
 import com.example.dynamic.model.system.Record;
+import com.example.dynamic.mybatis.pulgin.Pager;
 import com.example.dynamic.service.BuyServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +27,22 @@ public class BuyControler {
 
 
     @RequestMapping(value = "")
-    public ModelAndView index(Record record) {
+    public ModelAndView index(Record record, Pager<Record> pager) {
         ModelAndView result = new ModelAndView("index");
-        Map<String, Double> goodsList = new HashMap<>();
+        Map<String, Double> goodsList = new HashMap<>(4);
         goodsList.put("苹果", 0.5d);
         goodsList.put("香蕉", 0.6d);
         goodsList.put("橘子", 0.4d);
         goodsList.put("芒果", 0.7d);
         result.addObject("goodsList", goodsList);
         //购买记录
-        result.addObject("pageInfo", new PageInfo<Record>(buyService.getRecordList(record)));
+        Map<String, Object> params = new HashMap<>();
+        params.put("msg", record.getMsg());
+        pager.setParams(params);
+        pager.setSortOrder("desc");
+        pager.setSortField("buy_time");
+        buyService.getRecordList(pager);
+        result.addObject("pageInfo", pager);
         result.addObject("record", record);
         return result;
 
