@@ -44,7 +44,7 @@ public class SystemDataSourceConfig {
 
 
     @Bean(name = "systemSqlSessionFactory")
-    public SqlSessionFactory masterSqlSessionFactory(@Qualifier("systemDataSource") DataSource systemDataSource)
+    public SqlSessionFactory systemSqlSessionFactory(@Qualifier("systemDataSource") DataSource systemDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(systemDataSource);

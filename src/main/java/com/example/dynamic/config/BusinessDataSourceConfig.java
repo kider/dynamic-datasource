@@ -47,7 +47,7 @@ public class BusinessDataSourceConfig {
 
     @Primary
     @Bean(name = "businessSqlSessionFactory")
-    public SqlSessionFactory masterSqlSessionFactory(@Qualifier("businessDataSource") DataSource businessDataSource)
+    public SqlSessionFactory businessSqlSessionFactory(@Qualifier("businessDataSource") DataSource businessDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(businessDataSource);
