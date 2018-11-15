@@ -14,6 +14,19 @@
         <File name="log" fileName="D:/var/logs/dev.log" append="false">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
         </File>
+
+        <!-- DEBUG -->
+        <RollingFile name="RollingFileDebug" fileName="D:/var/logs/dev-debug.log"
+                     filePattern="D:/var/logs/$${date:yyyy-MM}/dev-info-%d{yyyy-MM-dd}-%i.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+        </RollingFile>
+
         <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
         <RollingFile name="RollingFileInfo" fileName="D:/var/logs/dev-info.log"
                      filePattern="D:/var/logs/$${date:yyyy-MM}/dev-info-%d{yyyy-MM-dd}-%i.log">
@@ -51,6 +64,22 @@
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <logger name="org.springframework" level="INFO"></logger>
         <logger name="org.mybatis" level="INFO"></logger>
+
+        <!-- druid -->
+        <logger name="druid.sql.DataSource" level="WARN">
+            <appender-ref ref="RollingFileWarn"/>
+        </logger>
+        <logger name="druid.sql.Connection" level="WARN">
+            <appender-ref ref="RollingFileWarn"/>
+        </logger>
+        <logger name="druid.sql.Statement" level="DEBUG">
+            <appender-ref ref="RollingFileDebug"/>
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="druid.sql.ResultSet" level="WARN">
+            <appender-ref ref="RollingFileWarn"/>
+        </logger>
+
         <root level="INFO">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
